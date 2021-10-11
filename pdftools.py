@@ -48,9 +48,11 @@ def merge_pdf(directory, new_pdf_name):
     new_pdf.write(open(directory+'\\'+new_pdf_name+'.pdf','wb'))
 
 if __name__=='__main__':
+    
     op = input('Split (s) or Merge (m)?')
     dir = input('Directory:')
     new_name = input('New File Name:')
+
     if op in ['s', 'S']:
         old_name = input('Old File Name:')
         pg = input('Page Range to Split for:')
