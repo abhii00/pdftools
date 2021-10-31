@@ -51,6 +51,7 @@ if __name__=='__main__':
     
     op = input('Split (s) or Merge (m)?')
     dir = input('Directory:')
+    print('\n'.join(os.listdir(dir)))
     new_name = input('New File Name:')
 
     if op in ['s', 'S']:
