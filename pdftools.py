@@ -52,13 +52,14 @@ if __name__=='__main__':
     op = input('Split (s) or Merge (m)?')
     dir = input('Directory:')
     print('\n'.join(os.listdir(dir)))
-    new_name = input('New File Name:')
 
     if op in ['s', 'S']:
         old_name = input('Old File Name:')
+        new_name = input('New File Name:')
         pg = input('Page Range to Split for:')
         split_pdf(dir, old_name, new_name, pg)
     elif op in ['m', 'M']:
+        new_name = input('New File Name:')
         merge_pdf(dir, new_name)
     else:
         print('Incorrect Configuration')
