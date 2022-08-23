@@ -12,7 +12,7 @@ def split_pdf(directory, old_pdf_name, new_pdf_name, page_range):
     """
 
     #open old and new pdfs in dir specified
-    old_pdf = PdfFileReader(open(directory+'/'+old_pdf_name+'.pdf', 'rb')) 
+    old_pdf = PdfFileReader(open(directory+'\\'+old_pdf_name+'.pdf', 'rb')) 
     new_pdf = PdfFileWriter()
 
     #calculate pages
@@ -54,8 +54,8 @@ if __name__=='__main__':
     print('\n'.join(os.listdir(dir)))
 
     if op in ['s', 'S']:
-        old_name = input('Old File Name:')
-        new_name = input('New File Name:')
+        old_name = input('Old File Name (w/o .pdf):')
+        new_name = input('New File Name (w/o .pdf):')
         pg = input('Page Range to Split for:')
         split_pdf(dir, old_name, new_name, pg)
     elif op in ['m', 'M']:
