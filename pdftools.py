@@ -1,4 +1,5 @@
 import os
+from posixpath import split
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 
 def split_pdf(directory, old_pdf_name, new_pdf_name, page_range): 
@@ -12,7 +13,7 @@ def split_pdf(directory, old_pdf_name, new_pdf_name, page_range):
     """
 
     #open old and new pdfs in dir specified
-    old_pdf = PdfFileReader(open(directory+'\\'+old_pdf_name+'.pdf', 'rb')) 
+    old_pdf = PdfFileReader(open(f'{directory}\\{old_pdf_name}', 'rb')) 
     new_pdf = PdfFileWriter()
 
     #calculate pages
@@ -24,7 +25,7 @@ def split_pdf(directory, old_pdf_name, new_pdf_name, page_range):
         new_pdf.addPage(old_pdf.getPage(p - 1))
 
     #write new pdf to file
-    new_pdf.write(open(directory+'\\'+new_pdf_name+'.pdf','wb'))
+    new_pdf.write(open(f'{directory}\\{new_pdf_name}.pdf','wb'))
 
 def merge_pdf(directory, new_pdf_name):
     """merges the pdfs in the directory specified.
@@ -37,27 +38,31 @@ def merge_pdf(directory, new_pdf_name):
     """
 
     #open old and new pdfs in dir specified
-    old_pdfs = [name for name in os.listdir(directory)]
+    old_pdfs = [file for file in os.listdir(directory)]
     new_pdf = PdfFileMerger(strict=False)
 
     #add pdf iteratively from old pdf to new pdf
     for old_pdf in old_pdfs: 
-        new_pdf.append(open(directory+'\\'+old_pdf, 'rb'))
+        new_pdf.append(open(f'{directory}\\{old_pdf}', 'rb'))
 
     #write new pdf to file
-    new_pdf.write(open(directory+'\\'+new_pdf_name+'.pdf','wb'))
+    new_pdf.write(open(f'{directory}\\{new_pdf_name}.pdf','wb'))
 
 if __name__=='__main__':
     
     op = input('Split (s) or Merge (m)?')
     dir = input('Directory:')
-    print('\n'.join(os.listdir(dir)))
+    dir_dict = os.listdir(dir)
+    for i, file in enumerate(dir_dict):
+        print(f'{i}: {file}')
 
     if op in ['s', 'S']:
-        old_name = input('Old File Name (w/o .pdf):')
-        new_name = input('New File Name (w/o .pdf):')
-        pg = input('Page Range to Split for:')
-        split_pdf(dir, old_name, new_name, pg)
+        old_num = int(input('Old File Number:'))
+        old_name = dir_dict[old_num]
+        new_names = input('CommaSpace-Sep New File Names (w/o .pdf):').split(', ')
+        pgs = input('CommaSpace-Sep Page Ranges to Split for:').split(', ')
+        for new_name, pg in zip(new_names, pgs):
+            split_pdf(dir, old_name, new_name, pg)
     elif op in ['m', 'M']:
         new_name = input('New File Name:')
         merge_pdf(dir, new_name)
