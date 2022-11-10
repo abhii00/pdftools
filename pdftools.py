@@ -66,9 +66,9 @@ if __name__=='__main__':
         for new_name, pg in zip(new_names, pgs):
             split_pdf(dir, old_name, new_name, pg)
     elif op in ['m', 'M']:
-        new_name = input('New File Name:')
         files_to_merge = input('CommaSpace-Sep File Numbers:').split(', ')
         files_to_merge_num = [int(n) for n in files_to_merge]
+        new_name = input('New File Name:')
         merge_pdf(dir, files_to_merge_num, new_name)
     else:
         print('Incorrect Configuration')
